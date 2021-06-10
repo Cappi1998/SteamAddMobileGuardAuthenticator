@@ -120,7 +120,9 @@ namespace Add_MobileGuard
             }
 
             Log.info("Login Sucess in Account: " + username, ConsoleColor.DarkGreen);
-            
+
+            string num = null;
+
             SessionData session = autoaccept.Session;
             AuthenticatorLinker linker = new AuthenticatorLinker(session);
             AuthenticatorLinker.LinkResult linkResponse = AuthenticatorLinker.LinkResult.GeneralFailure;
@@ -132,7 +134,7 @@ namespace Add_MobileGuard
                     case AuthenticatorLinker.LinkResult.MustProvidePhoneNumber:
                         {
                             GetNum:
-                            string num = null;
+                            num = null;
 
                             switch (Program.config.PhoneServiceToUse)
                             {
@@ -240,6 +242,28 @@ namespace Add_MobileGuard
             if(string.IsNullOrEmpty(code))
             {
                 Log.info("Phone Code is null!", ConsoleColor.Red);
+
+
+                switch (Program.config.PhoneServiceToUse)
+                {
+                    case "onlinesim.ru": //onlinesim.ru
+                        {
+                            
+                            break;
+                        }
+                    case "sms-activate.ru"://sms-activate.ru
+                        {
+                            sms_activate_ru.CancelPhone(num);
+                            break;
+                        }
+
+                    default:
+                        {
+                            Log.error($"Config.PhoneServiceToUse: {Program.config.PhoneServiceToUse} is Invalid!");
+                            break;
+                        }
+                }
+
                 return;
             }
 

@@ -53,7 +53,7 @@ namespace Add_MobileGuard.PhoneServices
 
             if (Request.Content.Contains("STATUS_WAIT_CODE"))
             {
-                Thread.Sleep(TimeSpan.FromSeconds(30));
+                Thread.Sleep(TimeSpan.FromSeconds(10));
                 goto TryAgain;
             }
 
@@ -67,6 +67,13 @@ namespace Add_MobileGuard.PhoneServices
             {
                 return null;
             }
+        }
+
+        public static void CancelPhone(string phone)
+        {
+            string URLCancel = $"{APIBASEURL}?api_key={Program.config.ApiKey}&action=setStatus&status=8&getStatus&id={OrderID}&forward={phone}";
+            var RequestCancel = new RequestBuilder(URLCancel).GET().Execute();
+            Log.info("Number Canceled!", ConsoleColor.DarkYellow);
         }
     }
 }
