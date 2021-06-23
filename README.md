@@ -16,7 +16,7 @@ Program to add MobileGuardAuthenticator to steam accounts created using [SteamAc
 - PhoneServiceToUse => Phone Service that will be used to obtain rental numbers.
    -- Available "sms-activate.ru" or "onlinesim.ru".
 - PhoneServiceApiKey => API Key for the chosen Phone Service.
-- Country => check <a href="#PhoneServiceToUse">About The Project</a> to find out how to get the country code
+- Country => check <a href="#PhoneServiceToUse">PhoneServiceToUse</a> to find out how to get the country code
 
 ## PhoneServiceToUse
 - "sms-activate.ru" - I checked the desired Country Code [here](https://sms-activate.ru/en/api2).
