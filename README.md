@@ -8,7 +8,7 @@ Program to add MobileGuardAuthenticator to steam accounts created using [SteamAc
 - folder "Database/Mobile_Guard_Added" this is where the account goes when it is processed and the Mobile Guard is successfully added, the .mafile file will also be created.
 
 
-## Config.json
+### Config.json
 - PhoneServiceToUse => Phone Service that will be used to obtain rental numbers.
    -- Available "sms-activate.ru" or "onlinesim.ru".
 - PhoneServiceApiKey => API Key for the chosen Phone Service.
