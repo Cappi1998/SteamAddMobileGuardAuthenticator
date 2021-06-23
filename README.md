@@ -4,7 +4,7 @@ Program to add MobileGuardAuthenticator to steam accounts created using [SteamAc
 ## Getting Started
 
 ### Prerequisites
-.NET Core 5.0 or higher required.
+[.NET Core 5.0](https://dotnet.microsoft.com/download) or higher required. 
 
 - Run the program for the first time to create the configuration files.
 - Configure the "Config.json" configuration file.
