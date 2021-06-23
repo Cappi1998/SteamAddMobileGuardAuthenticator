@@ -2,6 +2,10 @@
 Program to add MobileGuardAuthenticator to steam accounts created using [SteamAccountCreateHelper](https://github.com/Cappi1998/SteamAccountCreateHelper) program
 
 ## Getting Started
+
+### Prerequisites
+.NET Core 5.0 or higher required.
+
 - Run the program for the first time to create the configuration files.
 - Configure the "Config.json" configuration file.
 - folder "Database/Accounts_ToAdded_Guard" is where you add the .txt files of the accounts you want to add Mobile Guard Authenticator.
