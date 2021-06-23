@@ -14,7 +14,7 @@ namespace Add_MobileGuard.PhoneServices
 
         public static string getNum()
         {
-            string URL = $"{APIBASEURL}?api_key={Program.config.ApiKey}&action=getNumber&service={steam}&country={Program.config.Country}";
+            string URL = $"{APIBASEURL}?api_key={Program.config.PhoneServiceApiKey}&action=getNumber&service={steam}&country={Program.config.Country}";
 
             var Request = new RequestBuilder(URL).GET().Execute();
 
@@ -35,7 +35,7 @@ namespace Add_MobileGuard.PhoneServices
 
         public static string Getcode()
         {
-            string URL = $"{APIBASEURL}?api_key={Program.config.ApiKey}&action=getStatus&id={OrderID}";
+            string URL = $"{APIBASEURL}?api_key={Program.config.PhoneServiceApiKey}&action=getStatus&id={OrderID}";
 
             int counttryagain = 0;
 
@@ -71,7 +71,7 @@ namespace Add_MobileGuard.PhoneServices
 
         public static void CancelPhone(string phone)
         {
-            string URLCancel = $"{APIBASEURL}?api_key={Program.config.ApiKey}&action=setStatus&status=8&getStatus&id={OrderID}&forward={phone}";
+            string URLCancel = $"{APIBASEURL}?api_key={Program.config.PhoneServiceApiKey}&action=setStatus&status=8&getStatus&id={OrderID}&forward={phone}";
             var RequestCancel = new RequestBuilder(URLCancel).GET().Execute();
             Log.info("Number Canceled!", ConsoleColor.DarkYellow);
         }

@@ -16,7 +16,7 @@ namespace Add_MobileGuard.PhoneServices
         public static string getNum()
         {
             Inicio:
-            string URL = $"{APIBASEURL}getNum.php?apikey={Program.config.ApiKey}&service={steam}&number=true&country=372";
+            string URL = $"{APIBASEURL}getNum.php?apikey={Program.config.PhoneServiceApiKey}&service={steam}&number=true&country=372";
 
             var Request = new RequestBuilder(URL)
                 .GET()
@@ -74,7 +74,7 @@ namespace Add_MobileGuard.PhoneServices
                 return "";
             }
 
-            string URL = $"{APIBASEURL}getState.php?apikey={Program.config.ApiKey}&tzid={Program.tzid}&message_to_code=1&msg_list=1";
+            string URL = $"{APIBASEURL}getState.php?apikey={Program.config.PhoneServiceApiKey}&tzid={Program.tzid}&message_to_code=1&msg_list=1";
 
             var Request = new RequestBuilder(URL)
                 .GET()

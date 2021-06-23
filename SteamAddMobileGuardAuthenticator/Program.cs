@@ -21,7 +21,7 @@ namespace Add_MobileGuard
             Console.Title = "Add_MobileGuard // Cappi_1998";
             config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(Path.Combine(Database_Path,"Config.json")));
 
-            if(config.ApiKey == "YouApiKey")
+            if(config.PhoneServiceApiKey == "YouApiKey")
             {
                 Log.error("Configure the /Database/Config.json file and open the program again!");
                 Console.ReadLine();
