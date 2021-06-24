@@ -1,53 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MailKit.Net.Pop3;
-using MailKit;
-using MimeKit;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Drawing;
 using Add_MobileGuard.Models;
 
 namespace Add_MobileGuard
 {
     class Get_Email_Code_Pop3
     {
-
         public static Pop3Client Pop3Client;
 
         public static string Get_code_mail(E_Mail mail)
         {
-            int tentativas_get_code = 0;
-
-        INICIO:
-
+            int tentativas_get_code = 0; INICIO:
             string Guard_Code = "";
 
-            string hostname = "pop.gmail.com";
+            string Pop3HostName = "";
+            string domainName = mail.EMAIL.Split('@')[1];
 
-            var devide = mail.EMAIL.Split('@');
+            var popconfig = Program.pop3s.Where(a => a.SuportedDomains.Contains(domainName)).FirstOrDefault();
 
-            if (devide[1] == "rambler.ru")
+            if (popconfig != null)
             {
-                hostname = "pop.rambler.ru";
+                Pop3HostName = popconfig.PoP3Server;
             }
-
-            if (devide[1] == "ro.ru")
+            else
             {
-                hostname = "pop.rambler.ru";
-            }
-
-            if (devide[1] == "yandex.ru")
-            {
-                hostname = "pop.yandex.com";
-            }
-
-            if (devide[1] == "mail.ru")
-            {
-                hostname = "pop.mail.ru";
+                Log.error($"Pop3 HostName not defined for {domainName}");
+                return null;
             }
 
             string username = mail.EMAIL;
@@ -58,7 +39,7 @@ namespace Add_MobileGuard
             {
                 try
                 {
-                    client.Connect(hostname, 995, true);
+                    client.Connect(Pop3HostName, 995, true);
 
                     client.Authenticate(username, password);
 
@@ -114,34 +95,22 @@ namespace Add_MobileGuard
 
         public static string Get_URL_Confirm(E_Mail mail)
         {
-            int tentativas_get_code = 0;
-
-        INICIO:
-
+            int tentativas_get_code = 0; INICIO:
             string Confirm_Link = "";
 
-            string hostname = "pop.gmail.com";
+            string Pop3HostName = "";
+            string domainName = mail.EMAIL.Split('@')[1];
 
-            var devide = mail.EMAIL.Split('@');
+            var popconfig = Program.pop3s.Where(a => a.SuportedDomains.Contains(domainName)).FirstOrDefault();
 
-            if (devide[1] == "rambler.ru")
+            if (popconfig != null)
             {
-                hostname = "pop.rambler.ru";
+                Pop3HostName = popconfig.PoP3Server;
             }
-
-            if (devide[1] == "ro.ru")
+            else
             {
-                hostname = "pop.rambler.ru";
-            }
-
-            if (devide[1] == "yandex.ru")
-            {
-                hostname = "pop.yandex.com";
-            }
-
-            if (devide[1] == "mail.ru")
-            {
-                hostname = "pop.mail.ru";
+                Log.error($"Pop3 HostName not defined for {domainName}");
+                return null;
             }
 
             string username = mail.EMAIL;
@@ -155,7 +124,7 @@ namespace Add_MobileGuard
                 try
                 {
 
-                    client.Connect(hostname, 995, true);
+                    client.Connect(Pop3HostName, 995, true);
 
                     client.Authenticate(username, password);
 
@@ -211,12 +180,9 @@ namespace Add_MobileGuard
                 }
 
                 client.Disconnect(true);
-
-
             }
 
             return Confirm_Link;
         }
-
     }
 }

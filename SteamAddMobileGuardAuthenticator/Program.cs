@@ -1,6 +1,8 @@
-﻿using Add_MobileGuard.Utils;
+﻿using Add_MobileGuard.Models;
+using Add_MobileGuard.Utils;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Add_MobileGuard
@@ -15,6 +17,7 @@ namespace Add_MobileGuard
         public static string numero = "";
 
         public static int tzid = 0;
+        public static List<Pop3> pop3s = new List<Pop3>();
         static void Main(string[] args)
         {
             FolderStartupCheck.Check();

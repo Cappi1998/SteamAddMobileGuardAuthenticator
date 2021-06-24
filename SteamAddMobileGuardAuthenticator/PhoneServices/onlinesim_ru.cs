@@ -9,7 +9,6 @@ namespace Add_MobileGuard.PhoneServices
 {
     class onlinesim
     {
-
         public static string APIBASEURL = "https://onlinesim.ru/api/";
         public static string steam = "steam";
 
