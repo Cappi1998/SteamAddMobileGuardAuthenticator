@@ -22,7 +22,7 @@ Program to add MobileGuardAuthenticator to steam accounts created using [SteamAc
 - "onlinesim.ru" - Config.Country is the DDI of the desired country.
 
 
-![](Screenshots/Gui1.2.2.png) 
+![](Screenshots/Print.png) 
 
 ## DISCLAIMER
 This project is provided on AS-IS basis, without any guarantee at all. Author is not responsible for any harm, direct or indirect, that may be caused by using this plugin. You use this project at your own risk.
