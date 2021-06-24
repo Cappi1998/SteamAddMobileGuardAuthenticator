@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Add_MobileGuard.Models;
 
-namespace Add_MobileGuard
+namespace SteamAddMobileGuardAuthenticator
 {
     class Get_Email_Code_Pop3
     {

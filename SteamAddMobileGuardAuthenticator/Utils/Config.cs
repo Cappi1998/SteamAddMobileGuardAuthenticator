@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Add_MobileGuard.Utils
+namespace SteamAddMobileGuardAuthenticator.Utils
 {
     class Config
     {

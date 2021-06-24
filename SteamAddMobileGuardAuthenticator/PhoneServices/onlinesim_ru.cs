@@ -1,11 +1,9 @@
-﻿using Add_MobileGuard.Utils;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using SteamAddMobileGuardAuthenticator.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
-namespace Add_MobileGuard.PhoneServices
+namespace SteamAddMobileGuardAuthenticator.PhoneServices
 {
     class onlinesim
     {

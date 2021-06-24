@@ -1,19 +1,15 @@
 ﻿using Add_MobileGuard.Models;
-using Add_MobileGuard.PhoneServices;
-using Add_MobileGuard.Utils;
 using Newtonsoft.Json;
+using SteamAddMobileGuardAuthenticator.PhoneServices;
+using SteamAddMobileGuardAuthenticator.Utils;
 using SteamAuth;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Text;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace Add_MobileGuard
+namespace SteamAddMobileGuardAuthenticator
 {
     class MobileGuard_AddedProcess
     {

@@ -1,11 +1,11 @@
 ﻿using Add_MobileGuard.Models;
-using Add_MobileGuard.Utils;
 using Newtonsoft.Json;
+using SteamAddMobileGuardAuthenticator.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Add_MobileGuard
+namespace SteamAddMobileGuardAuthenticator
 {
     class Program
     {

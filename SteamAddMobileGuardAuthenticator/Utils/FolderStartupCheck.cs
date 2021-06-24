@@ -1,12 +1,10 @@
 ﻿using Add_MobileGuard.Models;
-using Add_MobileGuard.Utils;
 using Newtonsoft.Json;
-using System;
+using SteamAddMobileGuardAuthenticator.Utils;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
-namespace Add_MobileGuard
+namespace SteamAddMobileGuardAuthenticator
 {
     class FolderStartupCheck
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace Add_MobileGuard.Utils
+namespace SteamAddMobileGuardAuthenticator.Utils
 {
     class RequestBuilder
     {

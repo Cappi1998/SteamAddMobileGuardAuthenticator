@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Add_MobileGuard
+namespace SteamAddMobileGuardAuthenticator
 {
     public class Log
     {

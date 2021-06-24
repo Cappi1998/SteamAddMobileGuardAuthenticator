@@ -1,10 +1,8 @@
-﻿using Add_MobileGuard.Utils;
+﻿using SteamAddMobileGuardAuthenticator.Utils;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
-namespace Add_MobileGuard.PhoneServices
+namespace SteamAddMobileGuardAuthenticator.PhoneServices
 {
     class sms_activate_ru //Site https://sms-activate.ru/
     {
