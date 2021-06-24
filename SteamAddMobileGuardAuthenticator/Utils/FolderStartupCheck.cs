@@ -1,4 +1,5 @@
-﻿using Add_MobileGuard.Utils;
+﻿using Add_MobileGuard.Models;
+using Add_MobileGuard.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,20 @@ namespace Add_MobileGuard
                 Config config = new Config { PhoneServiceApiKey = "YouApiKey", Country=7, PhoneServiceToUse = "onlinesim.ru" };
 
                 File.WriteAllText(ConfigFile, JsonConvert.SerializeObject(config, Formatting.Indented));
+            }
+
+            string Pop3File = Path.Combine(Program.Database_Path, "Pop3Domains.json");
+
+            if (!File.Exists(Pop3File))
+            {
+                List<Pop3> pop3s = new List<Pop3> { 
+                    new Pop3 {PoP3Server= "pop.gmail.com", SuportedDomains= new List<string> { "gmail.com" } },
+                    new Pop3 {PoP3Server="pop.yandex.ru", SuportedDomains= new List<string>{ "yandex.ru" } },
+                    new Pop3 {PoP3Server="pop.mail.ru", SuportedDomains=new List<string>{ "mail.ru" } },
+                    new Pop3 {PoP3Server="pop.rambler.ru", SuportedDomains= new List<string>{ "rambler.ru", "ro.ru", "myrambler.ru" } }
+                    
+                };
+                File.WriteAllText(Pop3File, JsonConvert.SerializeObject(pop3s, Formatting.Indented));
             }
         }
     }
