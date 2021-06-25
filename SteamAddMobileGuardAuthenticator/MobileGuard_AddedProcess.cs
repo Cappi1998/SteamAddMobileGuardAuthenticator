@@ -130,34 +130,7 @@ namespace SteamAddMobileGuardAuthenticator
                     case AuthenticatorLinker.LinkResult.MustProvidePhoneNumber:
                         {
                             GetNum:
-                            num = null;
-
-                            switch (Program.config.PhoneServiceToUse)
-                            {
-                                case "onlinesim.ru": //onlinesim.ru
-                                    {
-                                        num = onlinesim.getNum();
-                                        break;
-                                    }
-                                case "sms-activate.ru"://sms-activate.ru
-                                    {
-                                        num = sms_activate_ru.getNum();
-                                        break;
-                                    }
-
-                                case "cheapsms.ru"://cheapsms.ru
-                                    {
-                                        num = cheapsms_ru.getNum();
-                                        break;
-                                    }
-
-                                default:
-                                    {
-                                        Log.error("Config.PhoneServiceToUse is Invalid!");
-                                        break;
-                                    }
-                            }
-
+                            num = GetPhoneNum();
                             if (string.IsNullOrWhiteSpace(num))
                             {
                                 goto GetNum;
@@ -167,7 +140,6 @@ namespace SteamAddMobileGuardAuthenticator
                             Log.info("Get Phone Number: " + num, ConsoleColor.Yellow);
                             linker.PhoneNumber = num;
                             break;
-
                         }
 
                     case AuthenticatorLinker.LinkResult.MustRemovePhoneNumber:
@@ -334,6 +306,33 @@ namespace SteamAddMobileGuardAuthenticator
                         break;
                     }
             }
+        }
+
+        public static string GetPhoneNum()
+        {
+            switch (Program.config.PhoneServiceToUse)
+            {
+                case "onlinesim.ru":
+                    {
+                        return onlinesim.getNum();
+                    }
+                case "sms-activate.ru":
+                    {
+                        return sms_activate_ru.getNum();
+                    }
+
+                case "cheapsms.ru":
+                    {
+                        return cheapsms_ru.getNum();
+                    }
+
+                default:
+                    {
+                        Log.error("Config.PhoneServiceToUse is Invalid!");
+                        break;
+                    }
+            }
+            return null;
         }
     }
 }
