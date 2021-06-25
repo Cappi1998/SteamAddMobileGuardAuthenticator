@@ -160,6 +160,7 @@ namespace SteamAddMobileGuardAuthenticator
                             if(link == "")
                             {
                                 Log.error("Email Confirmation Link Not Found!");
+                                CancelPhone(num);
                                 return;
                             }
 
