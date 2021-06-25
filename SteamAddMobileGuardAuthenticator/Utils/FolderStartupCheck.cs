@@ -28,7 +28,7 @@ namespace SteamAddMobileGuardAuthenticator
 
             if (!File.Exists(ConfigFile))
             {
-                Config config = new Config { PhoneServiceApiKey = "YouApiKey", Country=7, PhoneServiceToUse = "onlinesim.ru" };
+                Config config = new Config { PhoneServiceApiKey = "YouApiKey", Country=0, PhoneServiceToUse = "onlinesim.ru" };
 
                 File.WriteAllText(ConfigFile, JsonConvert.SerializeObject(config, Formatting.Indented));
             }
