@@ -276,14 +276,18 @@ namespace SteamAddMobileGuardAuthenticator
 
                 switch (Program.config.PhoneServiceToUse)
                 {
-                    case "onlinesim.ru": //onlinesim.ru
+                    case "onlinesim.ru":
                         {
-                            
                             break;
                         }
-                    case "sms-activate.ru"://sms-activate.ru
+                    case "sms-activate.ru":
                         {
                             sms_activate_ru.CancelPhone(num);
+                            break;
+                        }
+                    case "cheapsms.ru":
+                        {
+                            cheapsms_ru.CancelPhone(num);
                             break;
                         }
 
