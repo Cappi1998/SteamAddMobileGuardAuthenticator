@@ -19,6 +19,7 @@ Program to add MobileGuardAuthenticator to steam accounts created using [SteamAc
 
 ## PhoneServiceToUse
 - "sms-activate.ru" - I checked the desired Country Code [here](https://sms-activate.ru/en/api2).
+- "cheapsms.ru" - Config.Country doesn't matter.
 - "onlinesim.ru" - Config.Country is the DDI of the desired country.
 
 ---
