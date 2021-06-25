@@ -145,6 +145,12 @@ namespace SteamAddMobileGuardAuthenticator
                                         break;
                                     }
 
+                                case "cheapsms.ru"://cheapsms.ru
+                                    {
+                                        num = cheapsms_ru.getNum();
+                                        break;
+                                    }
+
                                 default:
                                     {
                                         Log.error("Config.PhoneServiceToUse is Invalid!");
@@ -185,7 +191,7 @@ namespace SteamAddMobileGuardAuthenticator
                                 return;
                             }
 
-                            var ssodaos = new RequestBuilder(link).GET().Execute();
+                            var request = new RequestBuilder(link).GET().Execute();
                             Thread.Sleep(TimeSpan.FromSeconds(5));
 
                             break;
@@ -200,6 +206,30 @@ namespace SteamAddMobileGuardAuthenticator
                     case AuthenticatorLinker.LinkResult.GeneralFailure:
                         {
                             Log.error("Error adding your phone number. Steam returned \"GeneralFailure\".");
+                            switch (Program.config.PhoneServiceToUse)
+                            {
+                                case "onlinesim.ru":
+                                    {
+                                        //onlinesim.CancelPhone();
+                                        break;
+                                    }
+                                case "sms-activate.ru":
+                                    {
+                                        sms_activate_ru.CancelPhone(num);
+                                        break;
+                                    }
+                                case "cheapsms.ru":
+                                    {
+                                        cheapsms_ru.CancelPhone(num);
+                                        break;
+                                    }
+
+                                default:
+                                    {
+                                        Log.error($"Config.PhoneServiceToUse: {Program.config.PhoneServiceToUse} is Invalid!");
+                                        break;
+                                    }
+                            }
                             return;
                         }
                 }
@@ -210,7 +240,6 @@ namespace SteamAddMobileGuardAuthenticator
                 Log.error($"Error Phone number linked to the account, please remove it and try again");
                 return;
             }
-
 
             string code = null;
 
@@ -226,7 +255,12 @@ namespace SteamAddMobileGuardAuthenticator
                         code = sms_activate_ru.Getcode();
                         break;
                     }
-
+                case "cheapsms.ru"://cheapsms.ru
+                    {
+                        code = cheapsms_ru.Getcode();
+                        break;
+                    }
+                    
                 default:
                     {
                         Log.error($"Config.PhoneServiceToUse: {Program.config.PhoneServiceToUse} is Invalid!");

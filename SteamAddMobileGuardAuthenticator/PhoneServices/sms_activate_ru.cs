@@ -20,7 +20,7 @@ namespace SteamAddMobileGuardAuthenticator.PhoneServices
 
             if(splitresponse.Length == 3)
             {
-                Log.info($"sms-activate.ru: OrderID: {splitresponse[1]} Phone:{splitresponse[2]}", ConsoleColor.Yellow);
+                Log.info($"sms-activate.ru -- OrderID: {splitresponse[1]} Phone:{splitresponse[2]}", ConsoleColor.Yellow);
 
                 OrderID = splitresponse[1];
                 return $"+{splitresponse[2]}";
@@ -71,7 +71,7 @@ namespace SteamAddMobileGuardAuthenticator.PhoneServices
         {
             string URLCancel = $"{APIBASEURL}?api_key={Program.config.PhoneServiceApiKey}&action=setStatus&status=8&getStatus&id={OrderID}&forward={phone}";
             var RequestCancel = new RequestBuilder(URLCancel).GET().Execute();
-            Log.info("Number Canceled!", ConsoleColor.DarkYellow);
+            Log.info($"sms-activate.ru -- Number Canceled -- Phone:{phone}", ConsoleColor.DarkYellow);
         }
     }
 }
