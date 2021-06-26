@@ -42,7 +42,7 @@ namespace SteamAddMobileGuardAuthenticator.PhoneServices
 
             var Request = new RequestBuilder(URL).GET().Execute();
 
-            if (Request.Content.Contains("STATUS_WAIT_CODE") || Request.Content.Contains("STATUS_WAIT_RESEND"))
+            if (Request.Content.Contains("STATUS_WAIT_CODE") || Request.Content.Contains("STATUS_WAIT_RETRY"))
             {
                 Thread.Sleep(TimeSpan.FromSeconds(10));
                 goto TryAgain;
@@ -75,14 +75,11 @@ namespace SteamAddMobileGuardAuthenticator.PhoneServices
 
         public static void RetryNumber()
         {
-            string URLCancel = $"{APIBASEURL}?api_key={Program.config.PhoneServiceApiKey}&action=retryNumber&id={OrderID}";
+            string URLCancel = $"{APIBASEURL}?api_key={Program.config.PhoneServiceApiKey}&action=setStatus&status=3&id={OrderID}";
             var RequestRetry = new RequestBuilder(URLCancel).POST().Execute();
 
-            if (RequestRetry.Content.Contains("ACCESS_NUMBER"))
+            if (RequestRetry.Content.Contains("ACCESS_RETRY_GET"))
             {
-                var split = RequestRetry.Content.Split(":");
-                OrderID = split[1].ToString();
-
                 Log.info($"sms-activate.ru -- Retry Number -- OrderID:{OrderID}", ConsoleColor.DarkYellow);
             }
             else

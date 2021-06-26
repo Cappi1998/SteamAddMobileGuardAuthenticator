@@ -87,6 +87,7 @@ namespace SteamAddMobileGuardAuthenticator.PhoneServices
             else
             {
                 Log.error($"cheapsms.ru -- Retry Number -- OrderID:{OrderID} FAILED");
+                CancelPhone(Program.numero);
             }
         }
     }

@@ -98,14 +98,19 @@ namespace SteamAddMobileGuardAuthenticator
                 {
                     case LoginResult.NeedEmail:
                         {
-                            Again:
+                        Again:
+                            getEmailCount++;
                             E_Mail e_Mail = new E_Mail { EMAIL = E_mail, EMAIL_PASS = E_mail_pass };
                             string Mail_Code = Get_Email_Code_Pop3.Get_code_mail(e_Mail);
                             Log.info("E-Mail Guard Code: " + Mail_Code, ConsoleColor.DarkGreen);
 
 
-                            if (getEmailCount >= 7) 
+                            if (getEmailCount >= 7)
+                            {
+                                Log.error("E-Mail Guard Code Not Found!");
                                 return;
+                            }
+                                
 
                             if (EmailCodes.Contains(Mail_Code))
                             {
