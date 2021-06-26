@@ -4,8 +4,10 @@ using SteamAddMobileGuardAuthenticator.PhoneServices;
 using SteamAddMobileGuardAuthenticator.Utils;
 using SteamAuth;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -15,39 +17,67 @@ namespace SteamAddMobileGuardAuthenticator
     {
         public static void StartProcess()
         {
-            string[] Accoun_files_path = Directory.GetFiles(Program.Accounts_ToAdded_Guard, "*.txt");
 
-            int counter = 0;
-            foreach (string currentFile in Accoun_files_path)
+            if(Program.config.AccountsFormatInput == "SteamAccountCreateHelper")
             {
-                counter++;
+                string[] Accoun_files_path = Directory.GetFiles(Program.Accounts_ToAdded_Guard, "*.txt");
 
-                Log.info($"Processing {counter}/{Accoun_files_path.Length}", ConsoleColor.Cyan);
+                int counter = 0;
+                foreach (string currentFile in Accoun_files_path)
+                {
+                    counter++;
+                    Log.info($"Processing {counter}/{Accoun_files_path.Length}", ConsoleColor.Cyan);
 
-                var Account_File_text = File.ReadAllText(currentFile);
+                    var Account_File_text = File.ReadAllText(currentFile);
 
-                string[] all_lines = Regex.Split(Account_File_text, "[\r\n]+");
+                    string[] all_lines = Regex.Split(Account_File_text, "[\r\n]+");
+                    string first_line = new StringReader(Account_File_text).ReadLine();
 
-                string first_line = new StringReader(Account_File_text).ReadLine();
-
-                var split = first_line.Split(':');
-
-                var get_mail_split = all_lines[1].Split(' ');
-                var get_mailPASS_split = all_lines[2].Split(' ');
-
-                string Username = split[0];
-
-                string Pass = split[1];
-
-                string E_Mail = get_mail_split[1];
-
-                string E_Mail_Pass = get_mailPASS_split[2];
+                    var split = first_line.Split(':');
+                    var get_mail_split = all_lines[1].Split(' ');
+                    var get_mailPASS_split = all_lines[2].Split(' ');
+                    string Username = split[0];
+                    string Pass = split[1];
+                    string E_Mail = get_mail_split[1];
+                    string E_Mail_Pass = get_mailPASS_split[2];
 
 
-                Add_GuardMobile(currentFile, Username, Pass, E_Mail, E_Mail_Pass);
+                    Add_GuardMobile(currentFile, Username, Pass, E_Mail, E_Mail_Pass);
+                }
+
+            }else if(Program.config.AccountsFormatInput == "login:pass:email:emailpass")
+            {
+                string[] AccountsAndEmailList = File.ReadAllLines(Path.Combine(Program.Database_Path, "Accounts_ToAdded_Guard.txt"));
+
+                int counter = 0;
+                foreach (string AccountsInfo in AccountsAndEmailList)
+                {
+                    counter++;
+                    Log.info($"Processing {counter}/{AccountsAndEmailList.Length}", ConsoleColor.Cyan);
+
+
+                    var split = AccountsInfo.Split(':');
+                    string Username = split[0];
+                    string Pass = split[1];
+                    string E_Mail = split[2];
+                    string E_Mail_Pass = split[3];
+
+                    Add_GuardMobile(null, Username, Pass, E_Mail, E_Mail_Pass);
+                }
+
+            }
+            else
+            {
+                Log.error($"{Program.config.AccountsFormatInput} is not valid for config.AccountsFormatInput.");
+                Log.info($"Use \"SteamAccountCreateHelper\" or \"login:pass:email:emailpass\"", ConsoleColor.DarkYellow);
+                Log.error("If you have any more questions read our #Readme.");
+                Log.info("https://github.com/Cappi1998/SteamAddMobileGuardAuthenticator#readme", ConsoleColor.Blue);
             }
 
+            
+
             Log.info("All is Done!! ", ConsoleColor.Cyan);
+            Console.ReadKey();
         }
 
         public static void Add_GuardMobile(string File_Path, string username, string pass, string E_mail, string E_mail_pass)
@@ -57,6 +87,10 @@ namespace SteamAddMobileGuardAuthenticator
 
             UserLogin autoaccept = new UserLogin(username, pass);
 
+
+            List<string> EmailCodes = new List<string>();
+            int getEmailCount = 0;
+
             LoginResult response = LoginResult.BadCredentials;
             while ((response = autoaccept.DoLogin()) != LoginResult.LoginOkay)
             {
@@ -64,11 +98,22 @@ namespace SteamAddMobileGuardAuthenticator
                 {
                     case LoginResult.NeedEmail:
                         {
-
+                            Again:
                             E_Mail e_Mail = new E_Mail { EMAIL = E_mail, EMAIL_PASS = E_mail_pass };
-
                             string Mail_Code = Get_Email_Code_Pop3.Get_code_mail(e_Mail);
                             Log.info("E-Mail Guard Code: " + Mail_Code, ConsoleColor.DarkGreen);
+
+
+                            if (getEmailCount >= 7) 
+                                return;
+
+                            if (EmailCodes.Contains(Mail_Code))
+                            {
+                                goto Again;
+                            }
+
+                            EmailCodes.Add(Mail_Code);
+                            getEmailCount++;
                             autoaccept.EmailCode = Mail_Code;
 
                             break;
@@ -101,7 +146,7 @@ namespace SteamAddMobileGuardAuthenticator
                             myProcess.Start();
 
                             Log.info("Login Need Captcha, try Get Captcha Code!!", ConsoleColor.DarkYellow);
-                            Log.info("Please Inform the Captcha, and press enter", ConsoleColor.DarkYellow);
+                            Log.info("Please Inform the Captcha, and press enter:", ConsoleColor.DarkYellow);
                             string Code = Console.ReadLine();
                             autoaccept.CaptchaText = Code;
                             break;
@@ -195,11 +240,6 @@ namespace SteamAddMobileGuardAuthenticator
 
             switch (Program.config.PhoneServiceToUse)
             {
-                case "onlinesim.ru": //onlinesim.ru
-                    {
-                        code = onlinesim.Getcode();
-                        break;
-                    }
                 case "sms-activate.ru"://sms-activate.ru
                     {
                         code = sms_activate_ru.Getcode();
@@ -250,21 +290,47 @@ namespace SteamAddMobileGuardAuthenticator
             {
                 Log.info($"Added Guard Success: {username}", ConsoleColor.Green);
 
+                if(Program.config.AccountsFormatInput == "SteamAccountCreateHelper")
+                {
+                    var textoarquivo = File.ReadAllText(File_Path);
 
-                var textoarquivo = File.ReadAllText(File_Path);
+                    StreamWriter sw;
+                    sw = File.AppendText(Path.Combine(Program.Mobile_Guard_Added, $"{username}.txt"));
 
-                StreamWriter sw;
-                sw = File.AppendText(Path.Combine(Program.Mobile_Guard_Added, $"{username}.txt"));
+                    sw.WriteLine(textoarquivo +
+                        $"\r\nPhone: {linker.PhoneNumber}" +
+                        $"\r\nR_CODE: {linker.LinkedAccount.RevocationCode}"
+                        );
 
-                sw.WriteLine(textoarquivo +
-                    $"\r\n\r\nPhone: {linker.PhoneNumber}" +
-                    $"\r\nR_CODE: {linker.LinkedAccount.RevocationCode}"
-                    );
+                    sw.Close();
+                    sw.Dispose();
 
-                sw.Close();
-                sw.Dispose();
+                    if (File_Path != null) File.Delete(File_Path);
+                }
+                else if (Program.config.AccountsFormatInput == "login:pass:email:emailpass")
+                {
+                    StreamWriter sw;
+                    sw = File.AppendText(Path.Combine(Program.Mobile_Guard_Added, $"{username}.txt"));
 
-                File.Delete(File_Path);
+                    sw.WriteLine(
+                        $"{username}:{pass}" +
+                        $"\r\n\r\n" +
+                        $"Email: {E_mail}" +
+                        $"\r\n" +
+                        $"EMail Password: {E_mail_pass}" +
+                        $"\r\n\r\n" +
+                        $"https://steamcommunity.com/profiles/{autoaccept.Session.SteamID}" +
+                        $"\r\n\r\n" +
+                        $"Phone: {linker.PhoneNumber}" +
+                        $"\r\n" +
+                        $"R_CODE: {linker.LinkedAccount.RevocationCode}"
+                        );
+
+                    sw.Close();
+                    sw.Dispose();
+
+                    RemoveAccountLineFromTxT(username);
+                }
             }
             else
             {
@@ -283,6 +349,7 @@ namespace SteamAddMobileGuardAuthenticator
 
         public static void CancelPhone(string num)
         {
+            Program.numero = null;
             switch (Program.config.PhoneServiceToUse)
             {
                 case "onlinesim.ru":
@@ -311,20 +378,41 @@ namespace SteamAddMobileGuardAuthenticator
 
         public static string GetPhoneNum()
         {
+            if(Program.AccountsOnNumber >= Program.config.AccountsPerNumber || string.IsNullOrWhiteSpace(Program.numero))
+            {
+                Program.AccountsOnNumber = 0;
+                switch (Program.config.PhoneServiceToUse)
+                {
+                    case "sms-activate.ru":
+                        {
+                            return sms_activate_ru.getNum();
+                        }
+
+                    case "cheapsms.ru":
+                        {
+                            return cheapsms_ru.getNum();
+                        }
+
+                    default:
+                        {
+                            Log.error("Config.PhoneServiceToUse is Invalid!");
+                            break;
+                        }
+                }
+            }
+
             switch (Program.config.PhoneServiceToUse)
             {
-                case "onlinesim.ru":
-                    {
-                        return onlinesim.getNum();
-                    }
                 case "sms-activate.ru":
                     {
-                        return sms_activate_ru.getNum();
+                        sms_activate_ru.RetryNumber();
+                        return Program.numero;
                     }
 
                 case "cheapsms.ru":
                     {
-                        return cheapsms_ru.getNum();
+                        cheapsms_ru.RetryNumber();
+                        return Program.numero;
                     }
 
                 default:
@@ -333,7 +421,27 @@ namespace SteamAddMobileGuardAuthenticator
                         break;
                     }
             }
-            return null;
+            return Program.numero;
+        }
+
+        public static void RemoveAccountLineFromTxT(string AccountName)
+        {
+            string path = Path.Combine(Program.Database_Path, "Accounts_ToAdded_Guard.txt");
+
+            List<string> AccountsAndEmailList = File.ReadAllLines(path).ToList();
+
+            int count = 0;
+            foreach(var line in AccountsAndEmailList)
+            {
+                
+                if (line.Contains(AccountName))
+                {
+                    AccountsAndEmailList.RemoveAt(count);
+                    File.WriteAllLines(path, AccountsAndEmailList);
+                    return;
+                }
+                count++;
+            }
         }
     }
 }

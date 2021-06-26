@@ -14,10 +14,12 @@ namespace SteamAddMobileGuardAuthenticator
         public static string Accounts_ToAdded_Guard = Database_Path + "Accounts_ToAdded_Guard\\";
         public static string Mobile_Guard_Added = Database_Path + "Mobile_Guard_Added\\";
 
+        public static List<string> UsedSmSCodes = new List<string>();
+
         public static Config config = null;
         public static string numero = "";
+        public static int AccountsOnNumber = 0;
 
-        public static int tzid = 0;
         public static List<Pop3> pop3s = new List<Pop3>();
         static void Main(string[] args)
         {
