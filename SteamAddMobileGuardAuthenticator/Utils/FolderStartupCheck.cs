@@ -40,9 +40,8 @@ namespace SteamAddMobileGuardAuthenticator
                 List<Pop3> pop3s = new List<Pop3> { 
                     new Pop3 {PoP3Server="pop.gmail.com", SuportedDomains= new List<string> { "gmail.com" } },
                     new Pop3 {PoP3Server="pop.yandex.ru", SuportedDomains= new List<string>{ "yandex.ru" } },
-                    new Pop3 {PoP3Server="pop.mail.ru", SuportedDomains=new List<string>{ "mail.ru" } },
+                    new Pop3 {PoP3Server="pop.mail.ru", SuportedDomains= new List<string>{ "mail.ru", "bk.ru", "inbox.ru", "list.ru", "mail.ua" } },
                     new Pop3 {PoP3Server="pop.rambler.ru", SuportedDomains= new List<string>{ "rambler.ru", "ro.ru", "myrambler.ru", "lenta.ru", "autorambler.ru" } }
-                    
                 };
                 File.WriteAllText(Pop3File, JsonConvert.SerializeObject(pop3s, Formatting.Indented));
             }
