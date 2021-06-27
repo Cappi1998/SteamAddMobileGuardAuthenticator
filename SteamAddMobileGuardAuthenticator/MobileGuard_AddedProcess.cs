@@ -25,24 +25,31 @@ namespace SteamAddMobileGuardAuthenticator
                 int counter = 0;
                 foreach (string currentFile in Accoun_files_path)
                 {
-                    counter++;
-                    Log.info($"Processing {counter}/{Accoun_files_path.Length}", ConsoleColor.Cyan);
+                    try
+                    {
+                        counter++;
+                        Log.info($"Processing {counter}/{Accoun_files_path.Length}", ConsoleColor.Cyan);
 
-                    var Account_File_text = File.ReadAllText(currentFile);
+                        var Account_File_text = File.ReadAllText(currentFile);
 
-                    string[] all_lines = Regex.Split(Account_File_text, "[\r\n]+");
-                    string first_line = new StringReader(Account_File_text).ReadLine();
+                        string[] all_lines = Regex.Split(Account_File_text, "[\r\n]+");
+                        string first_line = new StringReader(Account_File_text).ReadLine();
+                        var split = first_line.Split(':');
+                        var get_mail_split = all_lines[1].Split(' ');
+                        var get_mailPASS_split = all_lines[2].Split(' ');
+                        string Username = split[0];
+                        string Pass = split[1];
+                        string E_Mail = get_mail_split[1];
+                        string E_Mail_Pass = get_mailPASS_split[2];
 
-                    var split = first_line.Split(':');
-                    var get_mail_split = all_lines[1].Split(' ');
-                    var get_mailPASS_split = all_lines[2].Split(' ');
-                    string Username = split[0];
-                    string Pass = split[1];
-                    string E_Mail = get_mail_split[1];
-                    string E_Mail_Pass = get_mailPASS_split[2];
-
-
-                    Add_GuardMobile(currentFile, Username, Pass, E_Mail, E_Mail_Pass);
+                        Add_GuardMobile(currentFile, Username, Pass, E_Mail, E_Mail_Pass);
+                    }
+                    catch(Exception ex)
+                    {
+                        Log.error(ex.Message);
+                        var filename = Path.GetFileName(currentFile);
+                        Log.error($"{filename} the file structure is invalid, it was not possible to get the necessary information");
+                    }
                 }
 
             }else if(Program.config.AccountsFormatInput == "login:pass:email:emailpass")
