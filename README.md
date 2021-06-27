@@ -1,5 +1,6 @@
 ## Description
 Program to automatically add Mobile Guard Authenticator to Steam accounts.
+
 If you want a program to create steam accounts check the project [SteamAccountCreateHelper](https://github.com/Cappi1998/SteamAccountCreateHelper).
 
 ## Getting Started
