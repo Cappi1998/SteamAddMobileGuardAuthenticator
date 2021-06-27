@@ -52,19 +52,25 @@ namespace SteamAddMobileGuardAuthenticator
                 int counter = 0;
                 foreach (string AccountsInfo in AccountsAndEmailList)
                 {
-                    counter++;
-                    Log.info($"Processing {counter}/{AccountsAndEmailList.Length}", ConsoleColor.Cyan);
+                    try
+                    {
+                        counter++;
+                        Log.info($"Processing {counter}/{AccountsAndEmailList.Length}", ConsoleColor.Cyan);
 
+                        var split = AccountsInfo.Split(':');
+                        string Username = split[0];
+                        string Pass = split[1];
+                        string E_Mail = split[2];
+                        string E_Mail_Pass = split[3];
 
-                    var split = AccountsInfo.Split(':');
-                    string Username = split[0];
-                    string Pass = split[1];
-                    string E_Mail = split[2];
-                    string E_Mail_Pass = split[3];
-
-                    Add_GuardMobile(null, Username, Pass, E_Mail, E_Mail_Pass);
+                        Add_GuardMobile(null, Username, Pass, E_Mail, E_Mail_Pass);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.error(ex.Message);
+                        Log.error($"Format input is Invalid, correct format is \"login:pass:email:emailpass\"");
+                    }
                 }
-
             }
             else
             {
@@ -73,8 +79,6 @@ namespace SteamAddMobileGuardAuthenticator
                 Log.error("If you have any more questions read our #Readme.");
                 Log.info("https://github.com/Cappi1998/SteamAddMobileGuardAuthenticator#readme", ConsoleColor.Blue);
             }
-
-            
 
             Log.info("All is Done!! ", ConsoleColor.Cyan);
             Console.ReadKey();

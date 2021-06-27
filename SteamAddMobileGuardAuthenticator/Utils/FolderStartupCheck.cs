@@ -45,6 +45,13 @@ namespace SteamAddMobileGuardAuthenticator
                 };
                 File.WriteAllText(Pop3File, JsonConvert.SerializeObject(pop3s, Formatting.Indented));
             }
+
+            string AccountsFile = Path.Combine(Program.Database_Path, "Accounts_ToAdded_Guard.txt");
+
+            if (!File.Exists(AccountsFile))
+            {
+                File.AppendAllText(AccountsFile, "");
+            }
         }
     }
 }
