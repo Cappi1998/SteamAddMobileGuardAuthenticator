@@ -15,6 +15,7 @@ Program to add Mobile Guard Authenticator to steam accounts created using [Steam
 ### Config.json
 - <a href="#PhoneServiceToUse">PhoneServiceToUse</a> => Phone Service that will be used to obtain rental numbers.
 - PhoneServiceApiKey => API Key for the chosen Phone Service.
+- AccountsPerNumber => number(int) of accounts to be linked in each number.
 - Country => check <a href="#PhoneServiceToUse">PhoneServiceToUse</a> to find out how to get the country code
 
 ## PhoneServiceToUse
