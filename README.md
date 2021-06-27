@@ -1,5 +1,11 @@
+[![GitHub experimental release date](https://img.shields.io/github/release-date-pre/Cappi1998/SteamAddMobileGuardAuthenticator.svg?label=Released&maxAge=600)](https://github.com/Cappi1998/SteamAddMobileGuardAuthenticator/releases)
+[![Github experimental release downloads](https://img.shields.io/github/downloads-pre/Cappi1998/SteamAddMobileGuardAuthenticator/latest/total.svg?label=Downloads&maxAge=600)](https://github.com/Cappi1998/SteamAddMobileGuardAuthenticator/releases)
+
+
 ## Description
-Program to add Mobile Guard Authenticator to steam accounts created using [SteamAccountCreateHelper](https://github.com/Cappi1998/SteamAccountCreateHelper) program.
+Program to automatically add Mobile Guard Authenticator to Steam accounts.
+
+If you want a program to create steam accounts check the project [SteamAccountCreateHelper](https://github.com/Cappi1998/SteamAccountCreateHelper).
 
 ## Getting Started
 
@@ -7,15 +13,19 @@ Program to add Mobile Guard Authenticator to steam accounts created using [Steam
 [.NET Core 5.0](https://dotnet.microsoft.com/download) or higher required. 
 
 - Run the program for the first time to create the configuration files.
-- Configure the "Config.json" configuration file.
-- folder "Database/Accounts_ToAdded_Guard" is where you add the .txt files of the accounts you want to add Mobile Guard Authenticator.
-- folder "Database/Mobile_Guard_Added" this is where the account goes when it is processed and the Mobile Guard is successfully added, the .mafile file will also be created.
+- Configure the "Config.json" file.
 
 
 ### Config.json
+- <a href="#AccountsFormatInput">AccountsFormatInput</a> => input format of accounts that will be processed. you can use "SteamAccountCreateHelper" or "login:pass:email:emailpass"
 - <a href="#PhoneServiceToUse">PhoneServiceToUse</a> => Phone Service that will be used to obtain rental numbers.
 - PhoneServiceApiKey => API Key for the chosen Phone Service.
+- AccountsPerNumber => number(int) of accounts to be linked in each number.
 - Country => check <a href="#PhoneServiceToUse">PhoneServiceToUse</a> to find out how to get the country code
+
+## AccountsFormatInput
+- "SteamAccountCreateHelper" - for accounts made using the program [SteamAccountCreateHelper](https://github.com/Cappi1998/SteamAccountCreateHelper), you need to put the accounts' .txt files in the folder Database/Accounts_ToAdded_Guard.
+- "login:pass:email:emailpass" - you need to put the accounts in `Accounts_ToAdded_Guard.txt` inside the Database/ folder.
 
 ## PhoneServiceToUse
 - "sms-activate.ru" - I checked the desired Country Code [here](https://sms-activate.ru/en/api2).
