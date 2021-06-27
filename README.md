@@ -25,7 +25,7 @@ If you want a program to create steam accounts check the project [SteamAccountCr
 
 ## AccountsFormatInput
 - "SteamAccountCreateHelper" - for accounts made using the program [SteamAccountCreateHelper](https://github.com/Cappi1998/SteamAccountCreateHelper), you need to put the accounts' .txt files in the folder Database/Accounts_ToAdded_Guard.
-- "login:pass\:email\:emailpass" - you need to put the accounts in `Accounts_ToAdded_Guard.txt` inside the Database/ folder.
+- "login:pass:email­:emailpass" - you need to put the accounts in `Accounts_ToAdded_Guard.txt` inside the Database/ folder.
 
 ## PhoneServiceToUse
 - "sms-activate.ru" - I checked the desired Country Code [here](https://sms-activate.ru/en/api2).
