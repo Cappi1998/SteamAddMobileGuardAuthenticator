@@ -1,3 +1,7 @@
+[![GitHub experimental release date](https://img.shields.io/github/release-date-pre/Cappi1998/SteamAddMobileGuardAuthenticator.svg?label=Released&maxAge=600)](https://github.com/Cappi1998/SteamAddMobileGuardAuthenticator/releases)
+[![Github experimental release downloads](https://img.shields.io/github/downloads-pre/Cappi1998/SteamAddMobileGuardAuthenticator/latest/total.svg?label=Downloads&maxAge=600)](https://github.com/Cappi1998/SteamAddMobileGuardAuthenticator/releases)
+
+
 ## Description
 Program to automatically add Mobile Guard Authenticator to Steam accounts.
 
