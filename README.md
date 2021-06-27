@@ -13,7 +13,7 @@ If you want a program to create steam accounts check the project [SteamAccountCr
 [.NET Core 5.0](https://dotnet.microsoft.com/download) or higher required. 
 
 - Run the program for the first time to create the configuration files.
-- Configure the "Config.json" configuration file.
+- Configure the "Config.json" file.
 
 
 ### Config.json
