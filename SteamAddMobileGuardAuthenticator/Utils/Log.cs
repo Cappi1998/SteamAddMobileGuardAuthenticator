@@ -24,12 +24,6 @@ namespace SteamAddMobileGuardAuthenticator
             }
         }
 
-        public static void error(string format, params object[] args)
-        {
-            var msg = string.Format(format, args);
-            error(msg);
-        }
-
         public static void error(string msg, Exception e)
         {
             lock (locker)
@@ -69,8 +63,5 @@ namespace SteamAddMobileGuardAuthenticator
                 sw.Dispose();
             }
         }
-
     }
-
-
 }

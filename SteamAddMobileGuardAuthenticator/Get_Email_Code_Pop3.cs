@@ -148,11 +148,11 @@ namespace SteamAddMobileGuardAuthenticator
                         try
                         {
 
-                            var message1 = client.GetMessage(client.Count - 1);
+                           var message1 = client.GetMessage(client.Count - 1);
 
 
 
-                            var Dados = new Regex("(?<=stoken\\=)\\S+").Match(message1.Body.ToString()).Value;
+                            var Dados = new Regex("(?<=stoken\\=)\\S+").Match(message1.HtmlBody.ToString()).Value;
 
                             var split = Dados.Split('&');
                             var spli2 = split[1].Split('=');
